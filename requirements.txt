@@ -1,6 +1,14 @@
-Django==1.4.3
-South==0.7.6
+Flask==0.9
+Flask-Admin==1.0.4
+Flask-SQLAlchemy==0.16
+Flask-Script==0.5.3
+Flask-WTF==0.8.2
+Jinja2==2.6
+SQLAlchemy==0.7.9
+WTForms==1.0.2
+Werkzeug==0.8.3
 distribute==0.6.31
 gunicorn==0.17.0
 psycopg2==2.4.6
+requests==1.0.4
 wsgiref==0.1.2
