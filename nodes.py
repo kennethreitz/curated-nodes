@@ -86,7 +86,7 @@ def get_exposures(filter=None):
 
     q = Exposure.query.filter_by(**f).all()
 
-    return str([e.title for e in q])
+    return render_template('list.html', items=q)
 
 @app.route('/exposures/<slug>')
 def get_exposure(slug):
@@ -112,8 +112,6 @@ def get_experiments(filter=None):
 
     return render_template('list.html', items=q)
 
-    return str([e.title for e in q])
-
 @app.route('/experiments/<slug>')
 def get_experiment(slug):
 
@@ -138,7 +136,7 @@ def get_expressions(filter=None):
 
     return render_template('list.html', items=q)
 
-    return str([e.title for e in q])
+    return render_template('list.html', items=q)
 
 @app.route('/expressions/<slug>')
 def get_expression(slug):
