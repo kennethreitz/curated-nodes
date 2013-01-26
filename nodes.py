@@ -7,6 +7,8 @@ from flask import Flask, abort, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import HSTORE
 
+from flaskext.markdown import Markdown
+
 
 STYLES = ('prose', 'audio', 'photo', 'code', 'product')
 
@@ -16,6 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 
 db = SQLAlchemy(app)
+Markdown(app)
 
 class BaseModel(object):
     def save(self):
