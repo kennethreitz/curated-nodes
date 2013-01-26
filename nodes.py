@@ -231,7 +231,10 @@ def get_admin_edit(view, slug):
         e.title = request.form['post[title]']
         e.slug = request.form['post[slug]']
         e.content = request.form['post[content]']
-        e.style = request.form['post[style]']
+
+        if not view == 'pages':
+            e.style = request.form['post[style]']
+
         e.draft = 'post[draft]' in request.form
         e.save()
 
