@@ -1,8 +1,55 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block heading %}
+    <h1>{{ view|title }}{% if filter %} of {{ filter|title }}{% endif %}
+    </h1>
 
+<!--     <h2>
+          by Kenneth Reitz.
+        </h2>
+
+        <nav>
+          <ul>
+              <li><a href="#" rel="prev">&laquo; Previous </a></li>
+
+              <li><a href="#" rel="next">Next &raquo;</a></li>
+
+          </ul>
+        </nav>
+
+ -->
+
+{% endblock %}
+
+{% block content %}
+    <aside>
+        <p>Filter by {{ view }} style:</p>
+        <ul>
+            <li><a href="/{{ view }}/prose">prose</a></li>
+            <li><a href="/{{ view }}/audio">audio</a></li>
+            <li><a href="/{{ view }}/photo">photo</a></li>
+            <li><a href="/{{ view }}/code">code</a></li>
+            <li><a href="/{{ view }}/product">product</a></li>
+        </ul>
+        <hr>
+        <p>Or, browse other types of content:</p>
+        <ul>
+            <li><a href="/expressions">expressions</a></li>
+            <li><a href="/exposures">exposures</a></li>
+            <li><a href="/experiments">experiments</a></li>
+        </ul>
+
+        <p><a href="#">Confused</a>?</p>
+
+    </aside>
+    <ul>
     {% for item in items %}
-        <li>{{ item }}</li>
+        <li>
+            <a href="/{{ view }}/{{ item.slug }}">{{ item.title }}</a>
+            <span style="color:grey!important"><a href="/{{ view }}/{{ item.style }}">#{{ item.style }}</a></span>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua.</p>
+        </li>
     {% endfor %}
+    </ul>
 {% endblock %}

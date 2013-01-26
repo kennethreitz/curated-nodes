@@ -1,15 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>{% block title %}kennethreitz.org{% endblock %}</title>
-    </head>
 
-    <body>
-        <div class="container-fluid">
-            {% block content %}
 
-            {% endblock %}
-        </div>
-    </body>
-</html>
+<html lang="en-US" class="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{% block title %}{{ SITENAME }}{%endblock%}</title>
+  <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+
+
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/css/style-ia3-1.0.2.css">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="shortcut icon" href="/static/favicon.png">
+
+    <body class="single">
+        <div id="screen">
+            <header>
+    <h1 class="G2 GS">
+        <a class="G1 GS" href="/"><img alt="KR" src="/static/kr.png"></a>
+    </h1><!-- .G2.GS -->
+    <nav>
+        <ul class="containsGrid G3" id="headerOne">
+            <li class="G1 GS">
+                <h2 class="HSC">About</h2>
+                <ul>
+                    <li><a href="/pages/colophon.html">Colophon</a></li>
+                    <li><a href="/pages/events.html">Events</a></li>
+                    <li><a href="/pages/talks.html">Talks</a></li>
+                </ul>
+            </li>
+            <li class="G1">
+                <h2 class="HSC">Works</h2>
+                <ul>
+                    <li><a href="/pages/open-projects.html">Projects</a></li>
+                    <li><a href="/pages/photography.html">Photos</a></li>
+                    <li><a href="http://tracks.refact0r.org/">Music</a></li>
+                </ul>
+            </li>
+            <li class="G1">
+                <h2 class="HSC">Projects</h2>
+                <ul>
+                    <li><a href="http://docs.python-requests.org">Requests</a></li>
+                    <li><a href="http://docs.python-guide.org">Python Guide</a></li>
+                    <li><a href="http://docs.python-tablib.org">Tablib</a></li>
+                </ul>
+            </li>
+        </ul><!-- .containsGrid.G3#headerOne -->
+        <ul class="containsGrid G1" id="headerTwo">
+            <li class="G1 GS">
+                <h2 class="HSC">Contact</h2>
+                <ul>
+                    <li><a href="mailto:contact@kennethreitz.com">Email</a></li>
+                    <li><a href="http://twitter.com/kennethreitz">Twitter</a></li>
+                    <li><a href="https://github.com/kennethreitz">GitHub</a></li>
+                </ul>
+            </li>
+        </ul><!-- .containsGrid.G1#headerTwo -->
+    </nav>
+</header>
+
+
+<hr class="implied">
+  <section class="G4 GR GS" id="content">
+  <article class="G4 GR GS" id="content">
+  <header>
+    {% block heading %}
+    {% endblock %}
+
+  </header>
+
+  <div class="formatted">
+
+    {% block content %}
+    {% endblock %}
+
+  </div>
+
+  <hr>
+  <p>Follow me on Twitter as <a href="http://twitter.com/kennethreitz">kennethreitz</a>.</p>
+
+
+  </article>
+  </section><!-- #content.G4.GR.GS -->
+
+
+<hr class="implied">
+
+<footer>
+    <nav>
+
+        <ul class="G6 GS" id="footerTwo">
+            <li><a href="{{ SITEURL }}/{{ FEED }}">RSS</a></li>
+            <li><a href="http://junk.kennethreitz.com/">Tumblr</a></li>
+            <li><a href="https://github.com/kennethreitz">GitHub</a></li>
+            <li><a href="http://twitter.com/kennethreitz/">Twitter</a></li>
+            <li>&copy; 2013 Kenneth Reitz.</li>
+        </ul><!-- G6.GS#footerOne -->
+    </nav>
+</footer>
+<script>
+    jQuery.noConflict();
+
+    jQuery(document).ready(function() {
+        jQuery(document).trigger('CORE:HAS_INITIALIZED');
+    });
+
+    jQuery(window).resize(function() {
+        jQuery(document).trigger('CORE:HAS_RESIZED');
+    });
+</script>
+
+</div><!-- #screen -->
+
+{% include 'analytics.html' %}
+
+</body></html>
