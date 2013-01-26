@@ -74,6 +74,33 @@ class Exposure(db.Model, BaseModel):
 def hello():
     return 'Hello World!'
 
+
+
+
+@app.route('/exposures')
+def get_exposures(filter=None):
+
+    f = {'draft': False}
+    if filter:
+        f['style'] = filter
+
+    q = Exposure.query.filter_by(**f).all()
+
+    return str([e.title for e in q])
+
+@app.route('/exposures/<slug>')
+def get_exposure(slug):
+
+    want_drafts = ('preview' in request.args)
+
+    if slug in STYLES:
+        return get_experiments(filter=slug)
+
+    e = Exposure.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
+
+    return e.title
+
+
 @app.route('/experiments')
 def get_experiments(filter=None):
 
@@ -94,6 +121,30 @@ def get_experiment(slug):
         return get_experiments(filter=slug)
 
     e = Experiment.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
+
+    return e.title
+
+
+@app.route('/expressions')
+def get_expressions(filter=None):
+
+    f = {'draft': False}
+    if filter:
+        f['style'] = filter
+
+    q = Expression.query.filter_by(**f).all()
+
+    return str([e.title for e in q])
+
+@app.route('/expressions/<slug>')
+def get_expression(slug):
+
+    want_drafts = ('preview' in request.args)
+
+    if slug in STYLES:
+        return get_experiments(filter=slug)
+
+    e = Expression.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
 
     return e.title
 
