@@ -2,10 +2,31 @@
 
 {% block heading %}
     <h1>{{ post.title }}</h1>
+    {% if post.link %}
+        <p>→ <a href="{{ post.link }}">{{ post.link }}</a></p>
+    {% endif %}
+
 {% endblock %}
 
 
 {% block content %}
+    <aside>
+        <h3>{{ view[:-1]|title }} #{{ post.id }}</h3>
+        {% if post.status %}
+            <h4>({{ post.status }})</h4>
+        {% endif %}
+
+        <p>Content Type: <a href="/{{ view }}/{{ post.style }}">{{ post.style }}</a>.</p>
+
+
+        <p>See more <a href="/{{ view }}">{{ view }}</a>.</p>
+
+    </aside>
     {{ post.content|markdown }}
+
+    {% if post.log %}
+        <h3>{{ view[:-1]|title }} Log</h3>
+        {{ post.log|markdown }}
+    {% endif %}
 
 {% endblock %}

@@ -124,7 +124,7 @@ def get_exposure(slug):
 
     e = Exposure.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
 
-    return render_template('post.html', post=e, view='exposure')
+    return render_template('post.html', post=e, view='exposures')
 
 
 @app.route('/experiments')
@@ -148,7 +148,7 @@ def get_experiment(slug):
 
     e = Experiment.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
 
-    return render_template('post.html', post=e, view='experiment')
+    return render_template('post.html', post=e, view='experiments')
 
 
 @app.route('/expressions')
@@ -172,7 +172,7 @@ def get_expression(slug):
 
     e = Expression.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
 
-    return render_template('post.html', post=e, view='expression')
+    return render_template('post.html', post=e, view='expressions')
 
 
 if __name__ == '__main__':
