@@ -80,7 +80,7 @@ def page_not_found(error):
 
 @app.route('/')
 def hello():
-    return 'Hello World!'
+    return render_template('index.html')
 
 
 
