@@ -87,7 +87,7 @@ def get_exposures(filter=None):
     if filter:
         f['style'] = filter
 
-    q = Exposure.query.filter_by(**f).all()
+    q = Exposure.query.filter_by(**f).order_by(Exposure.id.desc()).all()
 
     return render_template('list.html', items=q, view='exposures', filter=filter)
 
@@ -111,7 +111,7 @@ def get_experiments(filter=None):
     if filter:
         f['style'] = filter
 
-    q = Experiment.query.filter_by(**f).all()
+    q = Experiment.query.filter_by(**f).order_by(Experiment.id.desc()).all()
 
     return render_template('list.html', items=q, view='experiments', filter=filter)
 
@@ -135,7 +135,7 @@ def get_expressions(filter=None):
     if filter:
         f['style'] = filter
 
-    q = Expression.query.filter_by(**f).all()
+    q = Expression.query.filter_by(**f).order_by(Expression.id.desc()).all()
 
     return render_template('list.html', items=q, view='expressions', filter=filter)
 
