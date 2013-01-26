@@ -94,7 +94,7 @@ def get_exposure(slug):
     want_drafts = ('preview' in request.args)
 
     if slug in STYLES:
-        return get_experiments(filter=slug)
+        return get_exposures(filter=slug)
 
     e = Exposure.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
 
@@ -136,15 +136,13 @@ def get_expressions(filter=None):
 
     return render_template('list.html', items=q)
 
-    return render_template('list.html', items=q)
-
 @app.route('/expressions/<slug>')
 def get_expression(slug):
 
     want_drafts = ('preview' in request.args)
 
     if slug in STYLES:
-        return get_experiments(filter=slug)
+        return get_expressions(filter=slug)
 
     e = Expression.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
 
