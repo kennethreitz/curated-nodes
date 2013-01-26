@@ -184,7 +184,12 @@ h1,
 #text-slug pre { font-weight: 500;word-wrap:break-word;line-height:1.3em }
 h1,
 #text-slug pre,
-#text-slug textarea { font-weight: 500;font-size:18px; line-height:1.3em  }
+#text-slug textarea { font-weight: 500;font-size:18px; line-height:1.3em}
+
+#text-style pre { font-weight: 500;word-wrap:break-word;line-height:1.3em }
+h1,
+#text-style pre,
+#text-style textarea { font-weight: 500;font-size:18px; line-height:1.3em  }
 
 p { color: #555 }
 a,
