@@ -9,7 +9,9 @@ from sqlalchemy.dialects.postgresql import HSTORE
 
 
 app = Flask(__name__)
+app.debug = os.environ.get('DEBUG')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+
 
 db = SQLAlchemy(app)
 
@@ -66,10 +68,15 @@ class Exposure(db.Model, BaseModel):
     def __repr__(self):
         return '<Exposure %r>' % self.slug
 
-
 @app.route('/')
 def hello():
     return 'Hello World!'
+
+@app.route('/experiments')
+def get_experiments():
+    l = Experiment.query.filter_by(draft=False).all()
+
+    return str(l)
 
 if __name__ == '__main__':
     app.run()
