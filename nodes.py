@@ -3,7 +3,7 @@
 import os
 from datetime import datetime
 
-from flask import Flask, abort, request
+from flask import Flask, abort, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import HSTORE
 
@@ -110,6 +110,8 @@ def get_experiments(filter=None):
 
     q = Experiment.query.filter_by(**f).all()
 
+    return render_template('list.html', items=q)
+
     return str([e.title for e in q])
 
 @app.route('/experiments/<slug>')
@@ -133,6 +135,8 @@ def get_expressions(filter=None):
         f['style'] = filter
 
     q = Expression.query.filter_by(**f).all()
+
+    return render_template('list.html', items=q)
 
     return str([e.title for e in q])
 
