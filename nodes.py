@@ -4,7 +4,7 @@ import os
 from functools import wraps
 from datetime import datetime
 
-from flask import Flask, abort, request, render_template, Response
+from flask import Flask, abort, request, render_template, Response, redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import HSTORE
 
@@ -12,6 +12,8 @@ from flask.ext.markdown import Markdown
 
 
 STYLES = ('prose', 'audio', 'photo', 'code', 'product')
+VIEWS = ('expressions', 'exposures', 'experiments', 'pages')
+
 SECRET = os.environ['SECRET']
 
 app = Flask(__name__)
@@ -169,7 +171,60 @@ def get_experiments(filter=None):
 @requires_auth
 def get_admin():
 
-    return render_template('admin.html')
+    return get_admin_view()
+
+@app.route('/admin/<view>')
+@requires_auth
+def get_admin_view(view='pages'):
+
+    if view not in VIEWS:
+        abort(404)
+
+    if view == 'pages':
+        model = Page
+    elif view == 'expressions':
+        model = Expression
+    elif view == 'exposures':
+        model = Exposure
+    elif view == 'experiments':
+        model = Experiment
+
+
+    drafts = model.query.filter_by(draft=True).order_by(model.id.desc()).all()
+    published = model.query.filter_by(draft=False).order_by(model.id.desc()).all()
+
+    return render_template('admin.html', drafts=drafts, published=published, view=view)
+
+
+@app.route('/admin/<view>/<slug>', methods=['GET', 'POST'])
+@requires_auth
+def get_admin_edit(view, slug):
+
+    if view not in VIEWS:
+        abort(404)
+
+    if view == 'pages':
+        model = Page
+    elif view == 'expressions':
+        model = Expression
+    elif view == 'exposures':
+        model = Exposure
+    elif view == 'experiments':
+        model = Experiment
+
+    if request.method == 'POST':
+        e = model.query.filter_by(slug=slug).first() or abort(406)
+        e.title = request.form['post[title]']
+        e.slug = request.form['post[slug]']
+        e.content = request.form['post[content]']
+        e.draft = 'post[draft]' in request.form
+        e.save()
+
+        return redirect(url_for('get_admin_edit', view=view, slug=e.slug))
+
+    e = model.query.filter_by(slug=slug).first() or abort(404)
+
+    return render_template('admin-edit.html', post=e, view=view)
 
 
 @app.route('/experiments/<slug>')

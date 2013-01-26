@@ -1,7 +1,5 @@
 <html lang="en-US"><head>
-  <title>Obtvse Demo</title>
-  <meta content="authenticity_token" name="csrf-param">
-<meta content="Ggm+AaGmTH7SUY/nCOgDsKl3LaVfqnYgh1CgdpopS/w=" name="csrf-token">
+  <title>Admin</title>
   <link href="/static/admin.css" media="screen" rel="stylesheet" type="text/css">
   <link href="http://fonts.googleapis.com/css?family=Lato:300,900" rel="stylesheet" type="text/css">
 <style type="text/css"></style></head>
@@ -14,16 +12,20 @@
   <h1>Drafts <a href="/new" class="button">New Draft</a></h1>
   <form accept-charset="UTF-8" action="/posts" class="new_post" id="new_post" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="Ggm+AaGmTH7SUY/nCOgDsKl3LaVfqnYgh1CgdpopS/w="></div>
     <input id="post_title" name="post[title]" placeholder="Start typing your title here..." size="30" type="text">
-</form>  <ul>
-  <li id="post-2">
+</form>
+<ul>
+  {% for draft in drafts %}
+    <li id="post-{{ draft.id }}">
     <h3>
-        <a href="/edit/2">wefwefwef</a>
+        <a href="/admin/{{ view }}/{{ draft.slug }}">{{ draft.title }}</a>
         <span class="links">
-            <a href="/wefwefwef" class="admin-view">view</a>
+            <a href="/{{ view }}/{{ draft.slug }}?preview=1" class="admin-view">view</a>
             <a href="/wefwefwef" class="admin-delete" data-confirm="Are you sure?" data-method="delete" rel="nofollow">x</a>
         </span>
     </h3>
-</li>
+  </li>
+  {% endfor %}
+
   </ul>
 
 </div>
@@ -31,15 +33,17 @@
 <div id="published" class="col">
   <h2>Published <a href="http://fast-everglades-1595.herokuapp.com/" class="button">Home</a></h2>
   <ul>
-    <li id="post-1">
+    {% for post in published %}
+    <li id="post-{{ post.id }}">
     <h3>
-        <a href="/edit/1">This and that</a>
+        <a href="/admin/{{ view }}/{{ post.slug }}">{{ post.title }}</a>
         <span class="links">
-            <a href="/this-and-that" class="admin-view">view</a>
-            <a href="/this-and-that" class="admin-delete" data-confirm="Are you sure?" data-method="delete" rel="nofollow">x</a>
+            <a href="/{{ view }}/{{ post.slug }}" class="admin-view">view</a>
         </span>
     </h3>
-</li>
+  </li>
+  {% endfor %}
+
   </ul>
 
 </div>
