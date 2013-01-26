@@ -96,7 +96,6 @@ class Experiment(db.Model, BaseModel):
     draft = db.Column(db.Boolean, default=True)
     style = db.Column(db.String(80))
     status = db.Column(db.String(80))
-    log = db.Column(db.Text())
     meta = db.Column(HSTORE())
     created = db.Column(db.DateTime, default=datetime.now)
     updated = db.Column(db.DateTime, default=datetime.now)
