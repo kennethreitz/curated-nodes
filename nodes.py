@@ -73,6 +73,11 @@ class Exposure(db.Model, BaseModel):
     def __repr__(self):
         return '<Exposure %r>' % self.slug
 
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
 @app.route('/')
 def hello():
     return 'Hello World!'
