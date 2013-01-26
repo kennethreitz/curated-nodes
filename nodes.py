@@ -22,11 +22,10 @@ class Expression(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(80), unique=True)
     content = db.Column(db.Text())
-    slug = db.Column(db.String(140))
+    title = db.Column(db.String(140))
     link = db.Column(db.String(280))
     draft = db.Column(db.Boolean, default=True)
     style = db.Column(db.String(80))
-    graduated = db.Column(db.String(280))
     meta = db.Column(HSTORE())
     created = db.Column(db.DateTime, default=datetime.now)
     updated = db.Column(db.DateTime, default=datetime.now)
@@ -38,7 +37,7 @@ class Experiment(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(80), unique=True)
     content = db.Column(db.Text())
-    slug = db.Column(db.String(140))
+    title = db.Column(db.String(140))
     link = db.Column(db.String(280))
     draft = db.Column(db.Boolean, default=True)
     style = db.Column(db.String(80))
@@ -47,6 +46,7 @@ class Experiment(db.Model, BaseModel):
     meta = db.Column(HSTORE())
     created = db.Column(db.DateTime, default=datetime.now)
     updated = db.Column(db.DateTime, default=datetime.now)
+    graduated = db.Column(db.String(280))
 
     def __repr__(self):
         return '<Experiment %r>' % self.slug
@@ -55,7 +55,7 @@ class Exposure(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(80), unique=True)
     content = db.Column(db.Text())
-    slug = db.Column(db.String(140))
+    title = db.Column(db.String(140))
     link = db.Column(db.String(280))
     draft = db.Column(db.Boolean, default=True)
     style = db.Column(db.String(80))
