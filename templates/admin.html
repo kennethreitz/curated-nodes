@@ -9,8 +9,8 @@
     <div id="save"></div>
 
     <div id="drafts" class="col">
-  <h1>Drafts <a href="/new" class="button">New Draft</a></h1>
-  <form accept-charset="UTF-8" action="/posts" class="new_post" id="new_post" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"><input name="authenticity_token" type="hidden" value="Ggm+AaGmTH7SUY/nCOgDsKl3LaVfqnYgh1CgdpopS/w="></div>
+  <h1>Drafts</h1>
+  <form accept-charset="UTF-8" action="/admin/{{ view }}" class="new_post" id="new_post" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
     <input id="post_title" name="post[title]" placeholder="Start typing your title here..." size="30" type="text">
 </form>
 <ul>
@@ -20,7 +20,7 @@
         <a href="/admin/{{ view }}/{{ draft.slug }}">{{ draft.title }}</a>
         <span class="links">
             <a href="/{{ view }}/{{ draft.slug }}?preview=1" class="admin-view">view</a>
-            <a href="/wefwefwef" class="admin-delete" data-confirm="Are you sure?" data-method="delete" rel="nofollow">x</a>
+            <!-- <a href="/wefwefwef" class="admin-delete" data-confirm="Are you sure?" data-method="delete" rel="nofollow">x</a> -->
         </span>
     </h3>
   </li>
@@ -31,7 +31,12 @@
 </div>
 
 <div id="published" class="col">
-  <h2>Published <a href="http://fast-everglades-1595.herokuapp.com/" class="button">Home</a></h2>
+  View: <a href="/admin">posts</a>,
+  <a href="/admin/expressions">expressions</a>,
+  <a href="/admin/exposures">exposures</a>, or
+  <a href="/admin/experiments">experiments</a>.
+
+  <h2>Published <a href="" class="button">Home</a></h2>
   <ul>
     {% for post in published %}
     <li id="post-{{ post.id }}">

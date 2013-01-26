@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
+import unidecode
 from functools import wraps
 from datetime import datetime
 
@@ -23,6 +25,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 db = SQLAlchemy(app)
 Markdown(app)
+
+
+
+def slugify(str):
+    str = unidecode.unidecode(str).lower()
+    return re.sub(r'\W+','-',str)
 
 
 def check_auth(username, password):
@@ -173,7 +181,7 @@ def get_admin():
 
     return get_admin_view()
 
-@app.route('/admin/<view>')
+@app.route('/admin/<view>', methods=['GET', 'POST'])
 @requires_auth
 def get_admin_view(view='pages'):
 
@@ -189,6 +197,13 @@ def get_admin_view(view='pages'):
     elif view == 'experiments':
         model = Experiment
 
+    if request.method == 'POST':
+        p = model()
+        p.title = request.form['post[title]']
+        p.slug = slugify(p.title)
+
+        p.save()
+        return redirect(url_for('get_admin_edit', view=view, slug=p.slug))
 
     drafts = model.query.filter_by(draft=True).order_by(model.id.desc()).all()
     published = model.query.filter_by(draft=False).order_by(model.id.desc()).all()

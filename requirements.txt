@@ -9,6 +9,7 @@ Mako==0.7.3
 Markdown==2.2.1
 MarkupSafe==0.15
 SQLAlchemy==0.8.0b2
+Unidecode==0.04.11
 WTForms==1.0.2
 Werkzeug==0.8.3
 alembic==0.4.2
