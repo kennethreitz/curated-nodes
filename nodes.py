@@ -25,6 +25,16 @@ class BaseModel(object):
         db.session.add(self)
         return db.session.commit()
 
+class Page(db.Model, BaseModel):
+    id = db.Column(db.Integer, primary_key=True)
+    slug = db.Column(db.String(80), unique=True)
+    content = db.Column(db.Text())
+    title = db.Column(db.String(140))
+    draft = db.Column(db.Boolean, default=True)
+
+    def __repr__(self):
+        return '<Page %r>' % self.slug
+
 class Expression(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     slug = db.Column(db.String(80), unique=True)
@@ -79,11 +89,19 @@ def page_not_found(error):
     return render_template('404.html'), 404
 
 @app.route('/')
-def hello():
+def get_index():
     return render_template('index.html')
 
 
 
+@app.route('/<slug>')
+def get_page(slug):
+
+    want_drafts = ('preview' in request.args)
+
+    p = Page.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
+
+    return render_template('page.html', page=p)
 
 @app.route('/exposures')
 def get_exposures(filter=None):
