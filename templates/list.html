@@ -4,21 +4,6 @@
     <h1>{{ view|title }}{% if filter %} of {{ filter|title }}{% endif %}
     </h1>
 
-<!--     <h2>
-          by Kenneth Reitz.
-        </h2>
-
-        <nav>
-          <ul>
-              <li><a href="#" rel="prev">&laquo; Previous </a></li>
-
-              <li><a href="#" rel="next">Next &raquo;</a></li>
-
-          </ul>
-        </nav>
-
- -->
-
 {% endblock %}
 
 {% block content %}
@@ -46,7 +31,12 @@
     <ul>
     {% for item in items %}
             <h3><a href="/{{ view }}/{{ item.slug }}">{{ item.title }}</a></h3>
-            <p>{{ item.content|truncate(160)|markdown|striptags }}</p>
+            {% if item.status %}
+                <p>Status: {{ item.status }}</p>
+            {% else %}
+                <p>{{ item.content|truncate(160)|markdown|striptags }}</p>
+            {% endif %}
+
     {% endfor %}
     </ul>
 {% endblock %}

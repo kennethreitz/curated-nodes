@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
+from functools import wraps
 from datetime import datetime
 
-from flask import Flask, abort, request, render_template
+from flask import Flask, abort, request, render_template, Response
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import HSTORE
 
@@ -11,6 +12,7 @@ from flask.ext.markdown import Markdown
 
 
 STYLES = ('prose', 'audio', 'photo', 'code', 'product')
+SECRET = os.environ['SECRET']
 
 app = Flask(__name__)
 app.debug = os.environ.get('DEBUG')
@@ -19,6 +21,31 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 db = SQLAlchemy(app)
 Markdown(app)
+
+
+def check_auth(username, password):
+    """This function is called to check if a username /
+    password combination is valid.
+    """
+    return password == SECRET
+
+def authenticate():
+    """Sends a 401 response that enables basic auth"""
+    return Response(
+    'Could not verify your access level for that URL.\n'
+    'You have to login with proper credentials', 401,
+    {'WWW-Authenticate': 'Basic realm="Login Required"'})
+
+
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
+
 
 class BaseModel(object):
     def save(self):
@@ -137,6 +164,13 @@ def get_experiments(filter=None):
     q = Experiment.query.filter_by(**f).order_by(Experiment.id.desc()).all()
 
     return render_template('list.html', items=q, view='experiments', filter=filter)
+
+@app.route('/admin')
+@requires_auth
+def get_admin():
+
+    return render_template('admin.html')
+
 
 @app.route('/experiments/<slug>')
 def get_experiment(slug):
