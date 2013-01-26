@@ -20,7 +20,14 @@
     <div id="text-slug" class="expandingArea active">
       <pre><span></span><br></pre>
       <textarea cols="40" id="post_slug" name="post[slug]" placeholder="Slug here" rows="1">{{ post.slug }}</textarea>
-    </div>
+    </div
+    {% if view != 'pages' %}
+      <div id="text-style" class="expandingArea active">
+        <pre><span></span><br></pre>
+        <textarea cols="40" id="post_style" name="post[style]" placeholder="Style here" rows="1">{{ post.style }}</textarea>
+      </div>
+    {% endif %}
+
 
     <fieldset class="markdown">
       <div id="text-content" class="expandingArea active">
