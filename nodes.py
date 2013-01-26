@@ -7,7 +7,7 @@ from flask import Flask, abort, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import HSTORE
 
-from flaskext.markdown import Markdown
+from flask.ext.markdown import Markdown
 
 
 STYLES = ('prose', 'audio', 'photo', 'code', 'product')
