@@ -3,10 +3,12 @@
 import os
 from datetime import datetime
 
-from flask import Flask
+from flask import Flask, abort, request
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import HSTORE
 
+
+STYLES = ('prose', 'audio', 'photo', 'code', 'product')
 
 app = Flask(__name__)
 app.debug = os.environ.get('DEBUG')
@@ -73,10 +75,28 @@ def hello():
     return 'Hello World!'
 
 @app.route('/experiments')
-def get_experiments():
-    l = Experiment.query.filter_by(draft=False).all()
+def get_experiments(filter=None):
 
-    return str(l)
+    f = {'draft': False}
+    if filter:
+        f['style'] = filter
+
+    q = Experiment.query.filter_by(**f).all()
+
+    return str([e.title for e in q])
+
+@app.route('/experiments/<slug>')
+def get_experiment(slug):
+
+    want_drafts = ('preview' in request.args)
+
+    if slug in STYLES:
+        return get_experiments(filter=slug)
+
+    e = Experiment.query.filter_by(slug=slug, draft=want_drafts).first() or abort(404)
+
+    return e.title
+
 
 if __name__ == '__main__':
     app.run()
