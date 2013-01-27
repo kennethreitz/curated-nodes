@@ -32,6 +32,19 @@
         <p><a href="/ia">Confused</a>?</p>
 
     </aside>
+    {% if view == 'expressions' %}
+        <p>Expressions are fully developed ideas and graduated experiments.
+        They represent serious works of prose, audio, photo, code, and product.
+        </p>
+    {% elif view == 'exposures' %}
+        <p>Exposures are simple observations and experiences. They document
+            daily life and the lifecycle of various experiments.
+        </p>
+    {% elif view == 'experiments' %}
+        <p>Experiments are evolving works, still under development.
+            Proven experiments can graduate into expressions.
+        </p>
+    {% endif %}
     <ul>
     {% for item in items %}
             <h3><a href="/{{ view }}/{{ item.slug }}">{{ item.title }}</a></h3>
