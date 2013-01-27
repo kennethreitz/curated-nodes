@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}
+    {{ post.title }} — kennethreitz.org
+{% endblock %}
+
 {% block heading %}
     <h1>{{ post.title }}</h1>
     {% if post.link %}
